@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Cardify</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string-array name="tabTitles">
+        <item>My Cards</item>
+        <item>Trade</item>
+        <item>Traded Cards</item>
+    </string-array>
+</resources>
