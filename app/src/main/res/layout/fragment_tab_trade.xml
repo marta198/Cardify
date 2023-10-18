@@ -1,21 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TabTrade">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/TradeTitle"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="test" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Trade Title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
 
     <Button
         android:id="@+id/goto_nfcscanner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go To NFC" />
+        android:text="Go To NFC"
+        android:layout_below="@id/TradeTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
 
-</FrameLayout>
+    <Button
+        android:id="@+id/goto_qrscanner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go To QR Scanner"
+        android:layout_below="@id/goto_nfcscanner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
+
+</RelativeLayout>

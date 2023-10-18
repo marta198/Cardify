@@ -35,6 +35,7 @@ public class TabTrade extends Fragment {
 
         // Find the button by its ID
         Button goToNFCScannerButton = view.findViewById(R.id.goto_nfcscanner);
+        Button goToQRScannerButton = view.findViewById(R.id.goto_qrscanner);
 
         // Set an OnClickListener for the button
         goToNFCScannerButton.setOnClickListener(new View.OnClickListener() {
@@ -42,6 +43,15 @@ public class TabTrade extends Fragment {
             public void onClick(View v) {
                 // Create an Intent to start the NFCScanner activity
                 Intent intent = new Intent(getContext(), NFCScanner.class); // Assuming NFCScanner is the name of your activity
+                startActivity(intent);
+            }
+        });
+
+        goToQRScannerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an Intent to start the QRScanner activity
+                Intent intent = new Intent(getContext(), QRScanner.class); // Assuming QRScanner is the name of your activity
                 startActivity(intent);
             }
         });
