@@ -39,5 +39,7 @@ dependencies {
     implementation("androidx.viewpager2:viewpager2:1.0.0")
     implementation ("com.google.code.gson:gson:2.8.8")
     implementation("com.google.zxing:core:3.4.1")
-    implementation("com.journeyapps:zxing-android-embedded:4.2.0")
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.2")
+    implementation("androidx.multidex:multidex:2.0.1")
 }

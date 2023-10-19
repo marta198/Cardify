@@ -14,20 +14,21 @@
         android:layout_marginTop="16dp" />
 
     <Button
-        android:id="@+id/goto_nfcscanner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Go To NFC"
-        android:layout_below="@id/TradeTitle"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp" />
-
-    <Button
         android:id="@+id/goto_qrscanner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Go To QR Scanner"
-        android:layout_below="@id/goto_nfcscanner"
+        android:layout_below="@id/TradeTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
+
+    <!-- Add the "Generate QR" button -->
+    <Button
+        android:id="@+id/goto_qrgenerator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Generate QR"
+        android:layout_below="@id/goto_qrscanner"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp" />
 
