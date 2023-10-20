@@ -21,9 +21,11 @@ public class QRGenerator extends AppCompatActivity {
     private String fullName;
     private String companyName;
     private String email;
+    private String address;
     private String phoneNumber;
     private String websiteLink;
     private String imageLink;
+    private String logoLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,19 +37,20 @@ public class QRGenerator extends AppCompatActivity {
         companyName = "ĀČĒĢĪĶĻŅŠŪŽ Company";
         email = "john.doe@example.com";
         phoneNumber = "123-456-7890";
+        address = "1234 Example Street, City, State, 12345";
         websiteLink = "https://www.example.com";
         imageLink = "https://www.example.com/image.png";
+        logoLink = "https://www.example.com/logo.png";
 
         ImageView imageView = findViewById(R.id.qr_img_trade);
 
-        // Calculate the QR code size based on the screen width and a 50px gap on each side
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int screenWidth = displayMetrics.widthPixels;
-        int qrCodeSize = screenWidth - 100; // Subtract 50px on each side
+        int qrCodeSize = screenWidth - 100;
 
-        String data = "Name: " + fullName + "\nCompany: " + companyName + "\nEmail: " + email
-                + "\nPhone: " + phoneNumber + "\nWebsite: " + websiteLink + "\nImage: " + imageLink;
+        String data = "Name: " + fullName + "\nCompany: " + companyName + "\nEmail: " + email + "\nAddress: " + address
+                + "\nPhone: " + phoneNumber + "\nWebsite: " + websiteLink + "\nImage: " + imageLink + "\nLogo: " + logoLink;
 
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {

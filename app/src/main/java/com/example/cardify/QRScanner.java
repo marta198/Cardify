@@ -18,9 +18,11 @@ public class QRScanner extends AppCompatActivity {
     private String fullName;
     private String companyName;
     private String email;
+    private String address;
     private String phoneNumber;
     private String websiteLink;
     private String imageLink;
+    private String logoLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +58,11 @@ public class QRScanner extends AppCompatActivity {
                         fullName = split[0];
                         companyName = split[1];
                         email = split[2];
-                        phoneNumber = split[3];
-                        websiteLink = split[4];
-                        imageLink = split[5];
+                        address = split[3];
+                        phoneNumber = split[4];
+                        websiteLink = split[5];
+                        imageLink = split[6];
+                        logoLink = split[7];
                     }
                     textView.setText(contents);
                 }

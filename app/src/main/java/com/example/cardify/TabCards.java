@@ -1,49 +1,36 @@
 package com.example.cardify;
 
-import static android.content.Context.MODE_PRIVATE;
-
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.Fragment;
-
-import com.example.cardify.Card;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
+import androidx.appcompat.widget.AppCompatImageButton;
 import android.widget.TextView;
-
-import java.util.HashSet;
-import java.util.Set;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.example.cardify.Card;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TabCards extends Fragment {
 
     private String title;
-    Set<Card> myCards;
-    Set<Card> myCurrentCards;
+    private List<Card> myCurrentCards;
+
     public TabCards(String title) {
         this.title = title;
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.fragment_tab_cards, container, false);
-            return view;
-
+        View view = inflater.inflate(R.layout.fragment_tab_cards, container, false);
+        return view;
     }
 
     @Override
@@ -52,6 +39,7 @@ public class TabCards extends Fragment {
         TextView titleText = view.findViewById(R.id.MyCardsTitle);
         titleText.setText(this.title);
         AppCompatImageButton addNewBtn = view.findViewById(R.id.cardAddNew);
+
         addNewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,34 +47,27 @@ public class TabCards extends Fragment {
                 startActivity(intent);
             }
         });
-        myCurrentCards = new HashSet<>();
-        myCards = Card.getMyCards(getActivity());
 
+        // Initialize the list of static cards
+        myCurrentCards = createStaticCards();
+        displayStaticCards(view);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        myCards = Card.getMyCards(getActivity());
-        for (Card item:myCards) {
-            boolean isAdded = false;
-            for (Card currentCard:myCurrentCards) {
-                if(currentCard.toString().equals(item.toString())) isAdded=true;
-            }
-            if (!isAdded){
-                myCurrentCards.add(item);
-                Log.d("testData", Integer.toString(myCurrentCards.size()));
-                loadFragment(new CardFragment(item),getContext());
-            }
 
+    private List<Card> createStaticCards() {
+        List<Card> staticCards = new ArrayList<>();
+        for (int i = 1; i <= 13; i++) {
+            Card card = new Card("Name " + i, "Company " + i, "Phone " + i, "Email " + i, "Website " + i, "Address " + i, "Image " + i, "Logo " + i);
+            staticCards.add(card);
         }
+
+        return staticCards;
     }
 
-    private void loadFragment(Fragment fragment, Context mContext) {
-        ScrollView fragmentsLayout = (ScrollView)getView().findViewById(R.id.scrollView);
-        FragmentManager fragmentManager = getParentFragmentManager();
-        fragmentManager.beginTransaction()
-                .add(R.id.linearLayout, fragment)
-                .commit();
+    private void displayStaticCards(View view) {
+        RecyclerView recyclerView = view.findViewById(R.id.cardRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        CardAdapter cardAdapter = new CardAdapter(getContext(), myCurrentCards);
+        recyclerView.setAdapter(cardAdapter);
     }
 }
