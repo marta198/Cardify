@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.util.DisplayMetrics;
 import android.graphics.Point;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -43,6 +45,24 @@ public class QRGenerator extends AppCompatActivity {
         logoLink = "https://www.example.com/logo.png";
 
         ImageView imageView = findViewById(R.id.qr_img_trade);
+
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            GsonBuilder builder = new GsonBuilder();
+            builder.setPrettyPrinting();
+
+            Gson gson = builder.create();
+            Card card = gson.fromJson(extras.getString("jsonCard"), Card.class);
+            fullName = card.getNameSurname();
+            companyName = card.getCompanyName();
+            email = card.getEmail();
+            phoneNumber = card.getPhoneNumber();
+            address = card.getAddress();
+            websiteLink = card.getWebsite();
+            imageLink = card.getImageLink();
+            logoLink = card.getLogoLink();
+        }
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);

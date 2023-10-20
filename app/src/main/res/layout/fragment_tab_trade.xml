@@ -1,35 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".TabTrade">
 
     <TextView
         android:id="@+id/TradeTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Trade Title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp" />
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:text="Trade Cards"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/goto_qrscanner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go To QR Scanner"
-        android:layout_below="@id/TradeTitle"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:text="Go To QR Scanner" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cardRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" >
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <!-- Add the "Generate QR" button -->
-    <Button
-        android:id="@+id/goto_qrgenerator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Generate QR"
-        android:layout_below="@id/goto_qrscanner"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp" />
 
-</RelativeLayout>
+</LinearLayout>
