@@ -4,10 +4,14 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -27,6 +31,26 @@ public class CardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_card);
 
+        Button backBtn = findViewById(R.id.view_btn_back);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+
+
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            GsonBuilder builder = new GsonBuilder();
+            builder.setPrettyPrinting();
+
+            Gson gson = builder.create();
+            card = gson.fromJson(extras.getString("jsonCard"), Card.class);
+        }
+
         // Initialize your TextViews and other views
         TextView companyNameField = findViewById(R.id.cardCompanyName_viewCard);
         TextView phoneField = findViewById(R.id.phone_viewCard);
@@ -35,6 +59,7 @@ public class CardActivity extends AppCompatActivity {
         TextView addressField = findViewById(R.id.address_viewCard);
         ImageView logoField = findViewById(R.id.companyLogo_viewCard);
         ImageView qrCodeField = findViewById(R.id.cardQrCode_viewCard);
+
 
         // Get the Card object from the intent
 //        card = (Card) getIntent().getSerializableExtra("CardObject");

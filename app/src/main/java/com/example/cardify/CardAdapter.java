@@ -2,6 +2,7 @@ package com.example.cardify;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
@@ -36,16 +40,20 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
         final Card card = cardList.get(position);
         holder.companyName.setText(card.getCompanyName());
-
+        Log.d("testData", card.getCompanyName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                GsonBuilder builder = new GsonBuilder();
+                Gson gson = builder.create();
+                String jsonCard = gson.toJson(card);
                 // Get the activity context to start the new activity
                 Context context = view.getContext();
 
                 // Create an Intent to start the AddNew activity
                 Intent intent = new Intent(context, CardActivity.class);
-
+                intent.putExtra("jsonCard",jsonCard);
                 // Start the new activity
                 context.startActivity(intent);
             }
