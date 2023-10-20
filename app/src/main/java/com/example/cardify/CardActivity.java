@@ -52,15 +52,25 @@ public class CardActivity extends AppCompatActivity {
     }
 
     private void generateAndDisplayQRCode(ImageView qrCodeField) {
-        String data = "Name: " + card.getNameSurname() + "\nCompany: " + card.getCompanyName()
-                + "\nEmail: " + card.getEmail() + "\nAddress: " + card.getAddress()
-                + "\nPhone: " + card.getPhoneNumber() + "\nWebsite: " + card.getWebsite()
-                + "\nImage: " + card.getImageLink() + "\nLogo: " + card.getLogoLink();
-
-        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
+            String name = "Name: " + card.getNameSurname();
+            String companyName = "Company: " + card.getCompanyName();
+            String email = "Email: " + card.getEmail();
+            String address = "Address: " + card.getAddress();
+            String phone = "Phone: " + card.getPhoneNumber();
+            String website = "Website: " + card.getWebsite();
+            String image = "Image: " + card.getImageLink();
+            String logo = "Logo: " + card.getLogoLink();
+
+            // Combine the individual data strings
+            String data = name + "\n" + companyName + "\n" + email + "\n" + address
+                    + "\n" + phone + "\n" + website + "\n" + image + "\n" + logo;
+
+            MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
             int qrCodeSize = 400;
-            BitMatrix bitMatrix = multiFormatWriter.encode(data, BarcodeFormat.QR_CODE, qrCodeSize, qrCodeSize);
+
+            // Encode the data using UTF-8 character encoding
+            BitMatrix bitMatrix = multiFormatWriter.encode(new String(data.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1), BarcodeFormat.QR_CODE, qrCodeSize, qrCodeSize);
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
             qrCodeField.setImageBitmap(bitmap);
@@ -68,4 +78,5 @@ public class CardActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
 }
