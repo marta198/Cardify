@@ -84,4 +84,27 @@ public class Card {
         }
         return cardSet;
     }
+    public static void addTradedCard(Card item, Activity activity) {
+        SharedPreferences mPrefs = activity.getSharedPreferences("cardifyPrefs", Activity.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String result = gson.toJson(item);
+        Set<String> set = mPrefs.getStringSet("TradedCards", new HashSet<String>());
+        set.add(result);
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        prefsEditor.putStringSet("TradedCards", set);
+        prefsEditor.apply();
+    }
+
+    public static Set<Card> getTradedCards(Activity activity) {
+        SharedPreferences mPrefs = activity.getSharedPreferences("cardifyPrefs", Activity.MODE_PRIVATE);
+        Set<Card> cardSet = new HashSet<>();
+        Set<String> stringSet = mPrefs.getStringSet("TradedCards", new HashSet<String>());
+        Gson gson = new Gson();
+
+        for (String item : stringSet) {
+            Card obj = gson.fromJson(item, Card.class);
+            cardSet.add(obj);
+        }
+        return cardSet;
+    }
 }
