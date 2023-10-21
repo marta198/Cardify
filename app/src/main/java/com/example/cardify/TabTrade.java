@@ -52,25 +52,7 @@ public class TabTrade extends Fragment {
         });
 
 
-        myCurrentCards = createStaticCards();
-        displayStaticCards(view);
     }
 
 
-    private List<Card> createStaticCards() {
-        List<Card> staticCards = new ArrayList<>();
-        for (int i = 1; i <= 13; i++) {
-            Card card = new Card("Name " + i, "Company " + i, "Phone " + i, "Email " + i, "Website " + i, "Address " + i, "Image " + i, "Logo " + i);
-            staticCards.add(card);
-        }
-
-        return staticCards;
-    }
-
-    private void displayStaticCards(View view) {
-        RecyclerView recyclerView = view.findViewById(R.id.cardRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        CardTradeAdapter cardTradeAdapter = new CardTradeAdapter(getContext(), myCurrentCards);
-        recyclerView.setAdapter(cardTradeAdapter);
-    }
 }

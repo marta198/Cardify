@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
+        android:gravity="center"
         android:text="Trade Cards"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -20,16 +21,10 @@
         android:id="@+id/goto_qrscanner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="16dp"
+        android:gravity="center"
         android:text="Go To QR Scanner" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/cardRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1" >
-
-    </androidx.recyclerview.widget.RecyclerView>
 
     <!-- Add the "Generate QR" button -->
 
