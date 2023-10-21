@@ -1,4 +1,4 @@
-package com.example.cardify;
+package com.application.cardify;
 
 import android.content.Context;
 import android.content.Intent;
