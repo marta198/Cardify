@@ -1,4 +1,4 @@
-package com.example.cardify;
+package com.application.cardify;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
