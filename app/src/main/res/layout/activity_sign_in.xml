@@ -24,7 +24,7 @@
         android:id="@+id/textView"
         android:layout_width="302dp"
         android:layout_height="46dp"
-        android:text="@string/sign_in"
+        android:text="Sign In"
         android:textSize="32dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
