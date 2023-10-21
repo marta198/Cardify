@@ -1,4 +1,4 @@
-package com.example.cardify;
+package com.application.cardify;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
