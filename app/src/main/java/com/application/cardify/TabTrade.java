@@ -1,6 +1,4 @@
-package com.example.cardify;
-
-
+package com.application.cardify;
 
 import android.content.Intent;
 import android.os.Bundle;
