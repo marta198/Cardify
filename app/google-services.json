@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "365777160892",
+    "project_id": "cardify-402213",
+    "storage_bucket": "cardify-402213.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:365777160892:android:a0d4abc0ea970e552e9eb9",
+        "android_client_info": {
+          "package_name": "com.application.cardify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "365777160892-r07n4u8cqauau7o5ngav1qd05812hsnb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.application.cardify",
+            "certificate_hash": "39a5ee65a367500f218f34603c9fb4df55015765"
+          }
+        },
+        {
+          "client_id": "365777160892-egid94aergb3ikvd50n5rngp5p9vf0ur.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDJnbnGKbBDrIkDRK60tkBJJgTHM60bzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "365777160892-egid94aergb3ikvd50n5rngp5p9vf0ur.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
