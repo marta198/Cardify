@@ -1,4 +1,4 @@
-package com.example.cardify;
+package com.application.cardify;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.pm.ActivityInfo;
