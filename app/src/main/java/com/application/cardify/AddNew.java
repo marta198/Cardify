@@ -1,16 +1,17 @@
 package com.application.cardify;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import com.application.cardify.Card;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -36,9 +37,10 @@ public class AddNew extends AppCompatActivity {
     String companyLogoUrl;
 
     // Firebase variables
-    private FirebaseAuth firebaseAuth;
-    private DatabaseReference databaseReference;
-    private FirebaseUser currentUser;
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://cardify-402213-default-rtdb.europe-west1.firebasedatabase.app/").getReference();
+    DatabaseReference cardsRef = databaseReference.child("cards");
+    FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +59,13 @@ public class AddNew extends AppCompatActivity {
         backgroundImage = findViewById(R.id.backgroundImage_addCard);
         chooseBg = findViewById(R.id.choosebg_addCard);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        currentUser = firebaseAuth.getCurrentUser();
-        databaseReference = FirebaseDatabase.getInstance().getReference("user_data");
-
         Button saveBtn = findViewById(R.id.saveBtn_addCard);
-        saveBtn.setOnClickListener(view -> saveCard());
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveCard();
+            }
+        });
 
         // Set up the company logo click listener
         logoImageView.setOnClickListener(view -> showImageUploadDialog(companyLogoUrl, "Company Logo Image URL"));
@@ -101,11 +104,10 @@ public class AddNew extends AppCompatActivity {
         } else if (companyLogoUrl == null || companyLogoUrl.isEmpty()) {
             showAlertDialog("Please provide a company logo URL.");
         } else {
-            // Create a Card object with the gathered data
-            Card card = new Card(currentUser.getEmail(), fullName, company, phone, email, website, address, selectedBackgroundImageUrl, companyLogoUrl, "medium", true);
-
-            // Push the card data to Firebase
-            databaseReference.push().setValue(card);
+            String user = currentUser.getEmail();
+            cardsRef.push().setValue(new Card(user, fullName, company, phone, email, website, address, selectedBackgroundImageUrl, companyLogoUrl, "Important", true));
+            Toast.makeText(AddNew.this, "Card created", Toast.LENGTH_SHORT);
+            finish();
         }
     }
 
