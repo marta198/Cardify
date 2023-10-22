@@ -48,22 +48,12 @@ public class TabTrade extends Fragment {
         titleText.setText(this.title);
 
         Button goToQRScannerButton = view.findViewById(R.id.goto_qrscanner);
-        Button goToNFCButton = view.findViewById(R.id.goto_nfcscanner);
 
 
         goToQRScannerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), QRScanner.class);
-                intent.putExtra("openScanner",true);
-                startActivityForResult(intent,1);
-            }
-        });
-
-        goToNFCButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), Beam.class);
                 intent.putExtra("openScanner",true);
                 startActivityForResult(intent,1);
             }
