@@ -26,6 +26,10 @@ public class TabCards extends Fragment {
         this.title = title;
     }
 
+    public TabCards() {
+        this.title = "My Cards";
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

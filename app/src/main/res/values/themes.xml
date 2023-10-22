@@ -3,9 +3,6 @@
     <style name="Base.Theme.Cardify" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">#2196F3</item>
         <item name="colorAccent">#64B5F6</item>
-        <item name="android:windowBackground">#FFFFFF</item>
-        <item name="android:textColorPrimary">#212121</item>
-        <item name="android:textColorSecondary">#757575</item>
         <item name="android:statusBarColor">#2196F3</item>
     </style>
 

@@ -7,16 +7,15 @@
     tools:context=".AddNew">
 
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cardContainer"
-        android:layout_width="642dp"
-        android:layout_height="336dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonsLayout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.146">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/backgroundImage_addCard"
@@ -48,7 +47,7 @@
             android:layout_marginEnd="16dp"
             android:hint="Full Name"
             android:inputType="text"
-            android:textSize="34sp"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/companyLogo_addCard"
             app:layout_constraintTop_toTopOf="parent" />
@@ -62,7 +61,7 @@
             android:layout_marginEnd="16dp"
             android:hint="Company Name"
             android:textColor="#000000"
-            android:textSize="20sp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/companyLogo_addCard"
             app:layout_constraintTop_toBottomOf="@+id/nameEditText_addCard" />
@@ -75,6 +74,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/temp_qr"
             app:layout_constraintVertical_bias="0.918" />
 
         <LinearLayout
@@ -107,7 +107,7 @@
                     android:layout_weight="1"
                     android:hint="Phone Number"
                     android:inputType="phone"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -129,7 +129,7 @@
                     android:layout_weight="1"
                     android:hint="Email"
                     android:inputType="textEmailAddress"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -151,7 +151,7 @@
                     android:layout_weight="1"
                     android:hint="Website"
                     android:inputType="textUri"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -173,36 +173,53 @@
                     android:layout_weight="1"
                     android:hint="Address"
                     android:inputType="textMultiLine"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
-        android:id="@+id/choosebg_addCard"
-        style="@style/SharpButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:text="Upload Background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.613"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardContainer" />
 
-    <Button
-        android:id="@+id/saveBtn_addCard"
-        style="@style/SharpButton"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/buttonsLayout"
+        android:layout_width="428dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:text="Save"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:elevation="4dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.357"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardContainer" />
+        app:layout_constraintTop_toBottomOf="@+id/cardContainer">
+
+        <Button
+            android:id="@+id/choosebg_addCard"
+            style="@style/SharpButton"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:text="Background" />
+
+        <Button
+            android:id="@+id/saveBtn_addCard"
+            style="@style/SharpButton"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:text="Save" />
+
+        <Button
+            android:id="@+id/cancelBtn_addCard"
+            style="@style/SharpButton"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:text="Cancel" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -68,6 +69,19 @@ public class AddNew extends AppCompatActivity {
 
         // Set up the chooseBg button click listener
         chooseBg.setOnClickListener(view -> showImageUploadDialog(selectedBackgroundImageUrl, "Background Image URL"));
+
+        Button cancelBtn = findViewById(R.id.cancelBtn_addCard);
+        cancelBtn.setOnClickListener(view -> {
+            nameEditText.setText("");
+            companyNameEditText.setText("");
+            phoneField.setText("");
+            emailField.setText("");
+            websiteField.setText("");
+            addressField.setText("");
+            logoImageView.setImageResource(0);
+            backgroundImage.setImageResource(0);
+            finish();
+        });
     }
 
     private void saveCard() {
@@ -146,14 +160,11 @@ public class AddNew extends AppCompatActivity {
     // Load an image from a URL into an ImageView
     private void loadImageFromUrl(String imageUrl, ImageView imageView) {
         try {
-            URL url = new URL(imageUrl);
-            Uri uri = Uri.parse(url.toURI().toString());
-            imageView.setImageURI(uri);
+            Picasso.get().load(imageUrl).into(imageView);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
     private void showAlertDialog(String message) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setTitle("Incomplete Information");
