@@ -66,8 +66,12 @@
         android:id="@+id/checkbox"
         android:layout_width="304dp"
         android:layout_height="34dp"
+<<<<<<< Updated upstream
         android:buttonTint="#2196F3"
         android:text="Hide password"
+=======
+        android:text="Show password"
+>>>>>>> Stashed changes
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.523"

@@ -48,6 +48,7 @@ public class SignIn extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         editEmail = findViewById(R.id.email_login);
         editPassword = findViewById(R.id.password_login);
+        editPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
         buttonSignIn = findViewById(R.id.sign_in_button);
         checkbox = (AppCompatCheckBox) findViewById(R.id.checkbox);
         textView = findViewById(R.id.sign_up_field);
@@ -64,7 +65,7 @@ public class SignIn extends AppCompatActivity {
         checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (!isChecked) {
+                if (isChecked) {
                     // show password
                     editPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 } else {
