@@ -74,8 +74,46 @@ public class Card {
         return importance;
     }
 
-    public boolean isOwner() {
-        return isOwner;
+    public boolean getIsOwner() { return isOwner; }
+
+    public void setUser(String user) { this.user = user; }
+
+    public void setNameSurname(String nameSurname) { this.nameSurname = nameSurname; }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setBgImage(String bgImage) {
+        this.bgImage = bgImage;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public void setImportance(String importance) {
+        this.importance = importance;
+    }
+
+    public void setIsOwner(boolean isOwner) {
+        this.isOwner = isOwner;
     }
 
     public static void addMyCard(Card item, Activity activity) {
