@@ -32,6 +32,8 @@ public class EditCard extends AppCompatActivity {
     private String newLogoImageUrl;
     private String newBackgroundImageUrl;
 
+    private String newImportance;
+
     protected void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         super.onCreate(savedInstanceState);
@@ -69,6 +71,14 @@ public class EditCard extends AppCompatActivity {
         loadImageFromUrl(jsonCard, logoImageView);
         loadImageFromUrl(jsonCard, backgroundImage);
 
+
+        logoImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showImageUploadDialog("Company Logo Image URL");
+            }
+        });
+
         chooseBg.setOnClickListener(view -> showImageUploadDialog("Background Image URL"));
 
         Button saveBtn = findViewById(R.id.saveBtn_editCard);
@@ -76,6 +86,41 @@ public class EditCard extends AppCompatActivity {
 
         Button cancelBtn = findViewById(R.id.cancelBtn_editCard);
         cancelBtn.setOnClickListener(view -> finish());
+
+        Button setImportanceButton = findViewById(R.id.editImportance_editCard);
+        setImportanceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showImportanceDialog();
+            }
+        });
+    }
+
+    private void showImportanceDialog() {
+        final String[] importanceOptions = {"Interesting", "Maybe", "Not Interesting"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Set Importance");
+        builder.setItems(importanceOptions, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                newImportance = importanceOptions[which];
+                // You can display the selected importance somewhere if needed
+                // e.g., a TextView to show the selected importance
+                // importanceTextView.setText(newImportance);
+                Button setImportanceButton = findViewById(R.id.editImportance_editCard);
+                setImportanceButton.setText(newImportance);
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.create().show();
     }
 
     private void loadImageFromUrl(String imageUrl, ImageView imageView) {
@@ -131,6 +176,7 @@ public class EditCard extends AppCompatActivity {
             existingCard.setAddress(address);
             existingCard.setBgImage(newBackgroundImageUrl);
             existingCard.setImage(newLogoImageUrl);
+            existingCard.setImportance(newImportance);
 
             // Save the edited card back to the database or perform any necessary updates
             // You may use Firebase Realtime Database or your preferred method
