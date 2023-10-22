@@ -56,7 +56,19 @@ public class TabCards extends Fragment {
     private List<Card> createStaticCards() {
         List<Card> staticCards = new ArrayList<>();
         for (int i = 1; i <= 13; i++) {
-            Card card = new Card("Name " + i, "Company " + i, "Phone " + i, "Email " + i, "Website " + i, "Address " + i, "Image " + i, "Logo " + i);
+            Card card = new Card(
+                    "User " + i,
+                    "Name " + i,
+                    "Company " + i,
+                    "Phone " + i,
+                    "Email " + i,
+                    "Website " + i,
+                    "Address " + i,
+                    "Image " + i,
+                    "Logo " + i,
+                    "Important Notes " + i,
+                    true
+            );
             staticCards.add(card);
         }
 

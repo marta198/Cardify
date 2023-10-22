@@ -3,30 +3,39 @@ package com.application.cardify;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import com.google.gson.Gson;
-
 import java.util.HashSet;
 import java.util.Set;
 
 public class Card {
 
+    private String user; // New variable for user's email
     private String nameSurname;
     private String companyName;
     private String phoneNumber;
     private String email;
     private String website;
     private String address;
-    private String imageLink;
-    private String logoLink;
+    private String bgImage; // Variable for background image
+    private String image; // Variable for the image
+    private String importance; // Variable for importance
+    private boolean isOwner; // Variable to indicate if the user is the owner
 
-    public Card(String nameSurname, String companyName, String phoneNumber, String email, String website, String address, String imageLink, String logoLink) {
+    public Card(String user, String nameSurname, String companyName, String phoneNumber, String email, String website, String address, String bgImage, String image, String importance, boolean isOwner) {
+        this.user = user;
         this.nameSurname = nameSurname;
         this.companyName = companyName;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.website = website;
         this.address = address;
-        this.imageLink = imageLink;
-        this.logoLink = logoLink;
+        this.bgImage = bgImage;
+        this.image = image;
+        this.importance = importance;
+        this.isOwner = isOwner;
+    }
+
+    public String getUser() {
+        return user;
     }
 
     public String getNameSurname() {
@@ -53,12 +62,20 @@ public class Card {
         return address;
     }
 
-    public String getImageLink() {
-        return imageLink;
+    public String getBgImage() {
+        return bgImage;
     }
 
-    public String getLogoLink() {
-        return logoLink;
+    public String getImage() {
+        return image;
+    }
+
+    public String getImportance() {
+        return importance;
+    }
+
+    public boolean isOwner() {
+        return isOwner;
     }
 
     public static void addMyCard(Card item, Activity activity) {
@@ -84,6 +101,7 @@ public class Card {
         }
         return cardSet;
     }
+
     public static void addTradedCard(Card item, Activity activity) {
         SharedPreferences mPrefs = activity.getSharedPreferences("cardifyPrefs", Activity.MODE_PRIVATE);
         Gson gson = new Gson();

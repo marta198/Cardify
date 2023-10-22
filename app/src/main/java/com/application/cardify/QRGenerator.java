@@ -60,8 +60,8 @@ public class QRGenerator extends AppCompatActivity {
             phoneNumber = card.getPhoneNumber();
             address = card.getAddress();
             websiteLink = card.getWebsite();
-            imageLink = card.getImageLink();
-            logoLink = card.getLogoLink();
+//            imageLink = card.getImageLink();
+//            logoLink = card.getLogoLink();
         }
 
         DisplayMetrics displayMetrics = new DisplayMetrics();

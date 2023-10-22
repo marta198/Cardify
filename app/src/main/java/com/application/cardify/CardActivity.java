@@ -22,8 +22,7 @@ import java.nio.charset.StandardCharsets;
 
 public class CardActivity extends AppCompatActivity {
 
-    //create a fake card
-    private Card card = new Card("John Doe", "ĀČĒĢĪĶĻŅŠŪŽ Company", "2222222", "test@test.com", "1234 Example Street, City, State, 12345", "https://www.example.com", "https://www.example.com/image.png", "https://www.example.com/logo.png");
+    private Card card; // Store the Card object
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,16 +32,14 @@ public class CardActivity extends AppCompatActivity {
 
         Button backBtn = findViewById(R.id.view_btn_back);
         backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+                                       @Override
+                                       public void onClick(View view) {
+                                           finish();
+                                       }
+                                   }
+        );
 
-
-
-
-        Bundle extras = getIntent().getExtras();
+                Bundle extras = getIntent().getExtras();
         if (extras != null) {
             GsonBuilder builder = new GsonBuilder();
             builder.setPrettyPrinting();
@@ -60,17 +57,12 @@ public class CardActivity extends AppCompatActivity {
         ImageView logoField = findViewById(R.id.companyLogo_viewCard);
         ImageView qrCodeField = findViewById(R.id.cardQrCode_viewCard);
 
-
-        // Get the Card object from the intent
-//        card = (Card) getIntent().getSerializableExtra("CardObject");
-
         // Set the text for your TextViews from the Card object
         companyNameField.setText(card.getCompanyName());
         phoneField.setText(card.getPhoneNumber());
         emailField.setText(card.getEmail());
         websiteField.setText(card.getWebsite());
         addressField.setText(card.getAddress());
-//        logoField.setText(card.getLogoLink());
 
         // Generate and display the QR code
         generateAndDisplayQRCode(qrCodeField);
@@ -78,18 +70,19 @@ public class CardActivity extends AppCompatActivity {
 
     private void generateAndDisplayQRCode(ImageView qrCodeField) {
         try {
-            String name = "Name: " + card.getNameSurname();
-            String companyName = "Company: " + card.getCompanyName();
-            String email = "Email: " + card.getEmail();
-            String address = "Address: " + card.getAddress();
-            String phone = "Phone: " + card.getPhoneNumber();
-            String website = "Website: " + card.getWebsite();
-            String image = "Image: " + card.getImageLink();
-            String logo = "Logo: " + card.getLogoLink();
+            String fullName = card.getNameSurname();
+            String companyName = card.getCompanyName();
+            String email = card.getEmail();
+            String address = card.getAddress();
+            String phone = card.getPhoneNumber();
+            String website = card.getWebsite();
+            String bgImage = card.getBgImage();
+            String image = card.getImage();
+            String logo = card.getImage();
 
             // Combine the individual data strings
-            String data = name + "\n" + companyName + "\n" + email + "\n" + address
-                    + "\n" + phone + "\n" + website + "\n" + image + "\n" + logo;
+            String data = fullName + "\n" + companyName + "\n" + email + "\n" + address
+                    + "\n" + phone + "\n" + website + "\n" + bgImage + "\n" + image + "\n" + logo;
 
             MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
             int qrCodeSize = 400;
@@ -103,5 +96,4 @@ public class CardActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
 }
