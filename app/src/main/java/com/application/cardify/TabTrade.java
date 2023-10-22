@@ -1,9 +1,4 @@
 package com.application.cardify;
-<<<<<<< Updated upstream
-=======
-
-
->>>>>>> Stashed changes
 
 import android.content.Intent;
 import android.os.Bundle;

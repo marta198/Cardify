@@ -47,7 +47,7 @@ public class Beam extends AppCompatActivity {
                     } else {
                         // Create an NDEF message and set it as the NFC message to be broadcasted
                         NdefMessage message = createNdefMessage("PlainText|" + "Your Message Here");
-                        nfcAdapter.setNdefPushMessage(message, Beam.this);
+//                        nfcAdapter.setNdefPushMessage(message, Beam.this);
                         Toast.makeText(context, Write_Success, Toast.LENGTH_LONG).show();
                     }
                 } catch (Exception e) {
