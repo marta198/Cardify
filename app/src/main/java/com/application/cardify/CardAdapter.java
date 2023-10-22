@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,15 +20,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> {
+public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder>  implements Filterable {
     private List<Card> cardList;
+    private  List<Card> cardListFull;
     private Context context;
 
     public CardAdapter(Context context, List<Card> cardList) {
         this.context = context;
         this.cardList = cardList;
+        this.cardListFull = new ArrayList<>(this.cardList);
     }
 
     @NonNull
@@ -66,6 +71,42 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     public int getItemCount() {
         return cardList.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return cardFilter;
+    }
+
+    private Filter cardFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Card> filteredList = new ArrayList<>();
+
+            if (constraint ==null || constraint.length() == 0){
+                filteredList.addAll(cardListFull);
+            }
+            else {
+               String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (Card item:cardListFull) {
+                    if (item.getImportance().toLowerCase().contains(filterPattern)){
+                        filteredList.add(item);
+                    }
+                }
+
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            cardList.clear();
+            cardList.addAll((List)results.values);
+            notifyDataSetChanged();
+        }
+    };
 
     public class CardViewHolder extends RecyclerView.ViewHolder {
         TextView companyName;

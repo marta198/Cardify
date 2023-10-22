@@ -1,10 +1,12 @@
 package com.application.cardify;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,7 +31,6 @@ import java.util.List;
 public class TabTrade extends Fragment {
 
     private String title;
-    private List<Card> myCurrentCards;
 
     public TabTrade(String title) {
         this.title = title;
@@ -63,17 +64,15 @@ public class TabTrade extends Fragment {
 
     public void onButtonShowPopupWindowClick(View view,String contents) {
 
-        String fullName = "" ;
-        String companyName= "" ;
-        String email = "";
-        String address = "";
-        String phoneNumber = "";
-        String websiteLink = "";
-        String imageLink = "";
-        String logoLink= "" ;
-        // inflate the layout of the popup window
-        LayoutInflater inflater = getLayoutInflater();
-        View popupView = inflater.inflate(R.layout.popup_window, null);
+        String fullName;
+        String companyName;
+        String email;
+        String address;
+        String phoneNumber;
+        String websiteLink;
+        String imageLink;
+        String logoLink;
+        final String[] importance = {"Maybe"};
         if (contents != null) {
             String[] split = contents.split("\\|");
             if (split.length == 5) {
@@ -85,34 +84,63 @@ public class TabTrade extends Fragment {
                 websiteLink = split[5];
                 imageLink = split[6];
                 logoLink = split[7];
+            } else {
+                logoLink = "";
+                imageLink = "";
+                address = "";
+                websiteLink = "";
+                email = "";
+                phoneNumber = "";
+                companyName = "";
+                fullName = "";
             }
+        } else {
+            logoLink = "";
+            imageLink = "";
+            address = "";
+            websiteLink = "";
+            email = "";
+            phoneNumber = "";
+            companyName = "";
+            fullName = "";
         }
 
 
+        String[] choices = {"Interesting", "Maybe", "NotInteresting"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder
+                .setTitle("Card scanned successfully!\nSelect Importance level.")
+                .setPositiveButton("Save", (dialog, which) -> {
+                    Card addedCard = new Card(
+                            "User ",
+                            fullName,
+                            companyName,
+                            phoneNumber,
+                            email,
+                            websiteLink,
+                            address,
+                            imageLink,
+                            logoLink,
+                            importance[0],
+                            false
+                    );;
+                    Log.d("testData", importance[0]);
+                })
+                .setNegativeButton("Discard", (dialog, which) -> {
 
-        // create the popup window
-        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        boolean focusable = true; // lets taps outside the popup also dismiss it
-        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-        TextView phoneText =(TextView) popupWindow.getContentView().findViewById(R.id.phone);
-        TextView emailText =(TextView) popupWindow.getContentView().findViewById(R.id.email);
-        TextView companynameText =(TextView) popupWindow.getContentView().findViewById(R.id.companyName);
-        phoneText.setText(phoneNumber);
-        emailText.setText(email);
-        companynameText.setText(companyName);
-        // show the popup window
-        // which view you pass in doesn't matter, it is only used for the window tolken
-        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+                })
+                .setSingleChoiceItems(choices, 1, (dialog, which) -> {
+                    importance[0] = choices[which];
+                });
 
-        // dismiss the popup window when touched
-        popupView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                popupWindow.dismiss();
-                return true;
-            }
-        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+
+
+
+
+
 
     }
 

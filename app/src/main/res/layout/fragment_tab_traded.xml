@@ -19,6 +19,38 @@
         android:textSize="24sp"
         android:textStyle="bold" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/InterestingChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:text="Interesting"
+            app:chipBackgroundColor="@color/bg_chip_state_list" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/MaybeChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:text="Maybe"
+            app:chipBackgroundColor="@color/bg_chip_state_list" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/NotInterestingChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:text="NotInteresting"
+            app:chipBackgroundColor="@color/bg_chip_state_list" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cardRecyclerView"
         android:layout_width="match_parent"
