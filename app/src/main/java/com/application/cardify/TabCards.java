@@ -82,7 +82,7 @@ public class TabCards extends Fragment {
     private void displayStaticCards(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.cardRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        CardAdapter cardAdapter = new CardAdapter(getContext(), myCurrentCards);
+        CardAdapter cardAdapter = new CardAdapter(getContext(), myCurrentCards, true);
         recyclerView.setAdapter(cardAdapter);
     }
 }

@@ -76,9 +76,13 @@ public class Card {
 
     public boolean getIsOwner() { return isOwner; }
 
-    public void setUser(String user) { this.user = user; }
+    public void setUser(String user) {
+        this.user = user;
+    }
 
-    public void setNameSurname(String nameSurname) { this.nameSurname = nameSurname; }
+    public void setNameSurname(String nameSurname) {
+        this.nameSurname = nameSurname;
+    }
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
@@ -112,9 +116,10 @@ public class Card {
         this.importance = importance;
     }
 
-    public void setIsOwner(boolean isOwner) {
-        this.isOwner = isOwner;
+    public void setOwner(boolean owner) {
+        isOwner = owner;
     }
+
 
     public static void addMyCard(Card item, Activity activity) {
         SharedPreferences mPrefs = activity.getSharedPreferences("cardifyPrefs", Activity.MODE_PRIVATE);
