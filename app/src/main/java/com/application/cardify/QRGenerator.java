@@ -1,12 +1,11 @@
 package com.application.cardify;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.widget.ImageView;
 import android.util.DisplayMetrics;
-import android.graphics.Point;
+import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -60,8 +59,6 @@ public class QRGenerator extends AppCompatActivity {
             phoneNumber = card.getPhoneNumber();
             address = card.getAddress();
             websiteLink = card.getWebsite();
-//            imageLink = card.getImageLink();
-//            logoLink = card.getLogoLink();
         }
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
