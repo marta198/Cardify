@@ -101,7 +101,7 @@ public class TabTrade extends Fragment {
         }
 
 
-        String[] choices = {"Interesting", "Maybe", "NotInteresting"};
+        String[] choices = {"Important", "Maybe", "Not Important"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder
                 .setTitle("Card scanned successfully!\nSelect Importance level.")

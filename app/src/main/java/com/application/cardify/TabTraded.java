@@ -1,6 +1,7 @@
 package com.application.cardify;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,9 +63,9 @@ public class TabTraded extends Fragment {
 
         createDynamicCards();
 
-        importantBtn = view.findViewById(R.id.Important);
+        importantBtn = view.findViewById(R.id.InterestingChip);
         maybeBtn = view.findViewById(R.id.MaybeChip);
-        notImportantBtn = view.findViewById(R.id.NotImportant);
+        notImportantBtn = view.findViewById(R.id.NotInterestingChip);
         List<Button> filterButtons = new ArrayList<>();
         filterButtons.add(importantBtn);
         filterButtons.add(maybeBtn);
@@ -80,7 +81,13 @@ public class TabTraded extends Fragment {
                         notIt.setSelected(false);
                     }
                     item.setSelected(!item.isSelected());
-                    cardAdapter.getFilter().filter(item.getText().toString().toLowerCase().trim());
+                    if (item.isSelected()){
+                        cardAdapter.getFilter().filter(item.getText().toString().toLowerCase().trim());
+                    }
+                    else {
+                        cardAdapter.getFilter().filter("");
+                    }
+
                 }
             });
         }
@@ -133,7 +140,6 @@ public class TabTraded extends Fragment {
                 filteredCards.add(card);
             }
         }
-
         displayDynamicCards(filteredCards);
     }
 

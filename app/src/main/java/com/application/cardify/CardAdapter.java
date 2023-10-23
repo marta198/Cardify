@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.BlockingDeque;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> implements Filterable {
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -50,7 +52,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
-        final Card card = cardList.get(position);
+        final Card card = filteredList.get(position);
         holder.companyName.setText(card.getCompanyName());
 
 
@@ -85,7 +87,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
 
     @Override
     public int getItemCount() {
-        return cardList.size();
+        return filteredList.size();
     }
 
     @Override
@@ -96,7 +98,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     private Filter cardFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
+            Log.d("testData", "performFiltering: "+ constraint);
             if (constraint == null || constraint.length() == 0) {
+                filteredList.clear();
                 filteredList.addAll(cardList);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
@@ -113,8 +117,11 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         };
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
+                List<Card> templist = new ArrayList<>();
+                templist.addAll((List<Card>) results.values);
+
                 filteredList.clear();
-                filteredList.addAll((List<Card>) results.values);
+                filteredList.addAll(templist);
                 notifyDataSetChanged();
             }
     };
