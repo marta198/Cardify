@@ -79,7 +79,7 @@ public class OnButtonShowPopupDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Card scanned successfully!\nSelect Importance level.");
 
-        String[] choices = {"Interesting", "Maybe", "NotInteresting"};
+        String[] choices = {"Important", "Maybe", "Not Important"};
         builder.setSingleChoiceItems(choices, 1, (dialog, which) -> {
             importance[0] = choices[which];
         });
