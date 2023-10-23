@@ -1,16 +1,22 @@
 package com.application.cardify;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import com.application.cardify.Card;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 
 import java.net.MalformedURLException;
@@ -29,10 +35,11 @@ public class EditCard extends AppCompatActivity {
     ImageView backgroundImage;
     Button chooseBg;
 
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+
     private String newLogoImageUrl;
     private String newBackgroundImageUrl;
-
-    private String newImportance;
 
     protected void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -52,15 +59,18 @@ public class EditCard extends AppCompatActivity {
 
         // Retrieve the card data from the extras
         String jsonCard = getIntent().getStringExtra("jsonCard");
-        String cardName = getIntent().getStringExtra("cardName");
+        String nameSurname = getIntent().getStringExtra("nameSurname");
         String companyName = getIntent().getStringExtra("companyName");
         String phoneNumber = getIntent().getStringExtra("phoneNumber");
         String email = getIntent().getStringExtra("email");
         String website = getIntent().getStringExtra("website");
         String address = getIntent().getStringExtra("address");
+        String bgImage = getIntent().getStringExtra("bgImage");
+        String logo = getIntent().getStringExtra("image");
+        String key = getIntent().getStringExtra("cardKey");
 
         // Update the UI elements with the retrieved data
-        nameEditText.setText(cardName);
+        nameEditText.setText(nameSurname);
         companyNameEditText.setText(companyName);
         phoneField.setText(phoneNumber);
         emailField.setText(email);
@@ -68,59 +78,17 @@ public class EditCard extends AppCompatActivity {
         addressField.setText(address);
 
         // Load the existing background and company logo images
-        loadImageFromUrl(jsonCard, logoImageView);
-        loadImageFromUrl(jsonCard, backgroundImage);
-
-
-        logoImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showImageUploadDialog("Company Logo Image URL");
-            }
-        });
+        loadImageFromUrl(logo, logoImageView);
+        loadImageFromUrl(bgImage, backgroundImage);
 
         chooseBg.setOnClickListener(view -> showImageUploadDialog("Background Image URL"));
+        logoImageView.setOnClickListener(view -> showImageUploadDialog("Company Logo Image URL"));
 
         Button saveBtn = findViewById(R.id.saveBtn_editCard);
-        saveBtn.setOnClickListener(view -> saveEditedCard());
+        saveBtn.setOnClickListener(view -> saveEditedCard(key, bgImage, logo));
 
         Button cancelBtn = findViewById(R.id.cancelBtn_editCard);
         cancelBtn.setOnClickListener(view -> finish());
-
-        Button setImportanceButton = findViewById(R.id.editImportance_editCard);
-        setImportanceButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showImportanceDialog();
-            }
-        });
-    }
-
-    private void showImportanceDialog() {
-        final String[] importanceOptions = {"Interesting", "Maybe", "Not Interesting"};
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Set Importance");
-        builder.setItems(importanceOptions, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                newImportance = importanceOptions[which];
-                // You can display the selected importance somewhere if needed
-                // e.g., a TextView to show the selected importance
-                // importanceTextView.setText(newImportance);
-                Button setImportanceButton = findViewById(R.id.editImportance_editCard);
-                setImportanceButton.setText(newImportance);
-            }
-        });
-
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        builder.create().show();
     }
 
     private void loadImageFromUrl(String imageUrl, ImageView imageView) {
@@ -131,8 +99,7 @@ public class EditCard extends AppCompatActivity {
                 e.printStackTrace();
             }
         } else {
-            // Handle the case where the URL is invalid
-            // You can show an error message or provide default image
+            Toast.makeText(this, "Invalid URL", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -146,15 +113,12 @@ public class EditCard extends AppCompatActivity {
     }
 
     private Card parseJsonToCard(String jsonCard) {
-        // Use Gson or your preferred JSON library to parse the JSON string back to a Card object
-        // Example:
-        // Gson gson = new Gson();
-        // return gson.fromJson(jsonCard, Card.class);
-        return null; // Replace with your actual code
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        return gson.fromJson(jsonCard, Card.class);
     }
 
-    private void saveEditedCard() {
-        // Get the edited data from the EditText fields
+    private void saveEditedCard(String key, String bgImage, String logo) {
         String fullName = nameEditText.getText().toString();
         String company = companyNameEditText.getText().toString();
         String phone = phoneField.getText().toString();
@@ -162,32 +126,47 @@ public class EditCard extends AppCompatActivity {
         String website = websiteField.getText().toString();
         String address = addressField.getText().toString();
 
-        // Retrieve the existing card data from the intent
-        String jsonCard = getIntent().getStringExtra("jsonCard");
-        Card existingCard = parseJsonToCard(jsonCard);
+        Card existingCard = new Card(
+                currentUser.getEmail(),
+                fullName,
+                company,
+                phone,
+                email,
+                website,
+                address,
+                bgImage,
+                logo,
+                "Important",
+                true
+        );
 
         if (existingCard != null) {
-            // Update the existing card with the edited data
             existingCard.setNameSurname(fullName);
             existingCard.setCompanyName(company);
             existingCard.setPhoneNumber(phone);
             existingCard.setEmail(email);
             existingCard.setWebsite(website);
             existingCard.setAddress(address);
-            existingCard.setBgImage(newBackgroundImageUrl);
-            existingCard.setImage(newLogoImageUrl);
-            existingCard.setImportance(newImportance);
 
-            // Save the edited card back to the database or perform any necessary updates
-            // You may use Firebase Realtime Database or your preferred method
-            updateCardInDatabase(existingCard);
+            if (newLogoImageUrl != null) {
+                existingCard.setImage(newLogoImageUrl);
+            }
 
-            // Finish the activity to return to the previous screen
+            if (newBackgroundImageUrl != null) {
+                existingCard.setBgImage(newBackgroundImageUrl);
+            }
+
+            DatabaseReference cardRef = FirebaseDatabase.getInstance("https://cardify-402213-default-rtdb.europe-west1.firebasedatabase.app/").getReference("cards");
+            cardRef.child(key).setValue(existingCard);
+
+            Toast.makeText(this, "Card saved", Toast.LENGTH_SHORT).show();
+
             finish();
         } else {
             showAlertDialog("Failed to load card data for editing.");
         }
     }
+
     private void showImageUploadDialog(String dialogTitle) {
         // Create an AlertDialog to allow the user to input the image URL
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
