@@ -1,36 +1,32 @@
 package com.application.cardify;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.TextView;
-
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class TabTrade extends Fragment {
 
     private String title;
+
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://cardify-402213-default-rtdb.europe-west1.firebasedatabase.app/").getReference();
+    DatabaseReference cardsRef = databaseReference.child("cards");
+    FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
     public TabTrade(String title) {
         this.title = title;
@@ -62,8 +58,7 @@ public class TabTrade extends Fragment {
 
     }
 
-    public void onButtonShowPopupWindowClick(View view,String contents) {
-
+    public void onButtonShowPopupWindowClick(View view, String contents) {
         String fullName;
         String companyName;
         String email;
@@ -111,8 +106,9 @@ public class TabTrade extends Fragment {
         builder
                 .setTitle("Card scanned successfully!\nSelect Importance level.")
                 .setPositiveButton("Save", (dialog, which) -> {
+                    String user = currentUser.getEmail();
                     Card addedCard = new Card(
-                            "User ",
+                            user,
                             fullName,
                             companyName,
                             phoneNumber,
@@ -123,7 +119,8 @@ public class TabTrade extends Fragment {
                             logoLink,
                             importance[0],
                             false
-                    );;
+                    );
+                    cardsRef.push().setValue(addedCard);;
                     Log.d("testData", importance[0]);
                 })
                 .setNegativeButton("Discard", (dialog, which) -> {
