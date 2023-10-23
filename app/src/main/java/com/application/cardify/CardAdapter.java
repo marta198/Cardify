@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,6 @@ import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.BlockingDeque;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> implements Filterable {
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -53,8 +51,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     @Override
     public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
         final Card card = filteredList.get(position);
+        holder.nameSurname.setText(card.getNameSurname());
         holder.companyName.setText(card.getCompanyName());
-
+        holder.email.setText(card.getEmail());
 
         // Check if the current card can show the edit button
         if (showEditButton) {
@@ -114,26 +113,28 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
             results.values = filteredList;
             return results;
         };
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                List<Card> templist = new ArrayList<>();
-                templist.addAll((List<Card>) results.values);
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            List<Card> templist = new ArrayList<>();
+            templist.addAll((List<Card>) results.values);
 
-                filteredList.clear();
-                filteredList.addAll(templist);
-                notifyDataSetChanged();
-            }
+            filteredList.clear();
+            filteredList.addAll(templist);
+            notifyDataSetChanged();
+        }
     };
 
     public class CardViewHolder extends RecyclerView.ViewHolder {
-        TextView companyName;
+        TextView nameSurname, companyName, email;
         View textContainer;
         View editCard;
         View deleteCard;
 
         public CardViewHolder(View itemView) {
             super(itemView);
+            nameSurname = itemView.findViewById(R.id.nameSurname);
             companyName = itemView.findViewById(R.id.companyName);
+            email = itemView.findViewById(R.id.email);
             textContainer = itemView.findViewById(R.id.textContainer_card_item);
             editCard = itemView.findViewById(R.id.edit_card);
             deleteCard = itemView.findViewById(R.id.delete_card);
