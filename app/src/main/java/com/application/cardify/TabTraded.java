@@ -120,7 +120,7 @@ public class TabTraded extends Fragment {
                 Toast.makeText(getContext(), "Failed to get data.", Toast.LENGTH_SHORT).show();
             }
         };
-        cardsRef.addListenerForSingleValueEvent(valueEventListener);
+        cardsRef.addValueEventListener(valueEventListener);
     }
 
     public void displayDynamicCards(List<Card> dynamicCards) {
