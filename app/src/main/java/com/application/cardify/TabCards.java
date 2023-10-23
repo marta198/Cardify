@@ -89,7 +89,7 @@ public class TabCards extends Fragment {
                 Toast.makeText(getContext(), "Failed to get data.", Toast.LENGTH_SHORT).show();
             }
         };
-        cardsRef.addValueEventListener(valueEventListener); // Use addValueEventListener instead of addListenerForSingleValueEvent
+        cardsRef.addValueEventListener(valueEventListener);
     }
 
     public void displayDynamicCards(List<Card> dynamicCards) {

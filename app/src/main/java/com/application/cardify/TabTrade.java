@@ -56,17 +56,11 @@ public class TabTrade extends Fragment {
             @Override
             public void onClick(View v) {
                 IntentIntegrator.forSupportFragment(TabTrade.this)
-                        //create a vertically locked scanner
                         .setOrientationLocked(true)
-                        //set the prompt text for the scanner
                         .setPrompt("Scan a QR code")
-                        //set the beep to true to play a beep when a code is scanned
-                        .setBeepEnabled(true)
-                        //set the camera id to back camera
+                        .setBeepEnabled(false)
                         .setCameraId(0)
-                        //set the result display duration
                         .setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
-                        //initiate scan
                         .initiateScan();
             }
         });

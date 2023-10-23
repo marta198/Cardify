@@ -60,7 +60,6 @@ public class OnButtonShowPopupDialogFragment extends DialogFragment {
                 bgImage = split[6];
                 logoLink = split[7];
 
-                // Display the data or save it to the database
                 Log.d("testData", fullName);
                 Log.d("testData", companyName);
                 Log.d("testData", email);
@@ -99,23 +98,18 @@ public class OnButtonShowPopupDialogFragment extends DialogFragment {
                     false
             );
             Log.d("testData", importance[0]);
-
             Log.d("testData", "Saving card to Firebase...");
 
-            // Save the card to Firebase
             DatabaseReference newCardRef = cardsRef.push();
             String cardKey = newCardRef.getKey();
             newCard.setKey(cardKey);
             newCardRef.setValue(newCard);
 
             Log.d("testData", "Card saved to Firebase");
-
-            // Dismiss the dialog
             dismiss();
         });
 
         builder.setNegativeButton("Discard", (dialog, which) -> {
-            // Handle the discard action
             dismiss();
         });
 
@@ -127,7 +121,6 @@ public class OnButtonShowPopupDialogFragment extends DialogFragment {
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        // Dismiss the dialog if the screen orientation has changed
         if (newConfig.orientation != Configuration.ORIENTATION_PORTRAIT) {
             dismiss();
         }

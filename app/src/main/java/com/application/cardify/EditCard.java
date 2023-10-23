@@ -46,7 +46,6 @@ public class EditCard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_card);
 
-        // Initialize your UI elements
         nameEditText = findViewById(R.id.nameEditText_editCard);
         companyNameEditText = findViewById(R.id.companyName_editCard);
         phoneField = findViewById(R.id.phone_editCard);
@@ -57,7 +56,6 @@ public class EditCard extends AppCompatActivity {
         backgroundImage = findViewById(R.id.backgroundImage_editCard);
         chooseBg = findViewById(R.id.choosebg_editCard);
 
-        // Retrieve the card data from the extras
         String jsonCard = getIntent().getStringExtra("jsonCard");
         String nameSurname = getIntent().getStringExtra("nameSurname");
         String companyName = getIntent().getStringExtra("companyName");
@@ -69,7 +67,6 @@ public class EditCard extends AppCompatActivity {
         String logo = getIntent().getStringExtra("image");
         String key = getIntent().getStringExtra("cardKey");
 
-        // Update the UI elements with the retrieved data
         nameEditText.setText(nameSurname);
         companyNameEditText.setText(companyName);
         phoneField.setText(phoneNumber);
@@ -77,7 +74,6 @@ public class EditCard extends AppCompatActivity {
         websiteField.setText(website);
         addressField.setText(address);
 
-        // Load the existing background and company logo images
         loadImageFromUrl(logo, logoImageView);
         loadImageFromUrl(bgImage, backgroundImage);
 
@@ -182,10 +178,10 @@ public class EditCard extends AppCompatActivity {
                 String enteredUrl = input.getText().toString();
                 if (isValidUrl(enteredUrl)) {
                     if (dialogTitle.equals("Background Image URL")) {
-                        newBackgroundImageUrl = enteredUrl; // Update the new background image URL
+                        newBackgroundImageUrl = enteredUrl;
                         loadImageFromUrl(newBackgroundImageUrl, backgroundImage);
                     } else if (dialogTitle.equals("Company Logo Image URL")) {
-                        newLogoImageUrl = enteredUrl; // Update the new company logo image URL
+                        newLogoImageUrl = enteredUrl;
                         loadImageFromUrl(newLogoImageUrl, logoImageView);
                     }
                 } else {
@@ -206,7 +202,6 @@ public class EditCard extends AppCompatActivity {
 
 
     private boolean isValidData(String fullName, String company, String phone, String email, String website, String address) {
-        // Check if all required fields are filled
         return !fullName.isEmpty() && !company.isEmpty() && !phone.isEmpty() && !email.isEmpty() && !website.isEmpty() && !address.isEmpty();
     }
 
@@ -220,12 +215,5 @@ public class EditCard extends AppCompatActivity {
             }
         });
         alertDialog.show();
-    }
-
-    private void updateCardInDatabase(Card card) {
-        // Perform database update here
-        // Example: Save the edited card data back to Firebase Realtime Database
-        // DatabaseReference cardRef = FirebaseDatabase.getInstance().getReference("your_card_data");
-        // cardRef.child(card.getId()).setValue(card);
     }
 }

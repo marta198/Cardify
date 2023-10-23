@@ -28,7 +28,7 @@ public class QRCodeFullscreen extends AppCompatActivity {
         if (qrCodeData != null) {
             try {
                 MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-                int qrCodeSize = 800;  // Adjust the size as needed
+                int qrCodeSize = 800;
 
                 BitMatrix bitMatrix = multiFormatWriter.encode(
                         new String(qrCodeData.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1),

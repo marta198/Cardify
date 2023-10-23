@@ -62,7 +62,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
             Picasso.get().load(card.getImage()).into(holder.companyLogo);
         }
 
-        // Check if the current card can show the edit button
         if (showEditButton) {
             holder.editCard.setVisibility(View.VISIBLE);
         } else {
@@ -166,7 +165,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     private void openEditCardActivity(Card card) {
         Intent intent = new Intent(context, EditCard.class);
 
-        // Pass the card data as extras
         intent.putExtra("nameSurname", card.getNameSurname());
         intent.putExtra("companyName", card.getCompanyName());
         intent.putExtra("phoneNumber", card.getPhoneNumber());
@@ -175,7 +173,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         intent.putExtra("address", card.getAddress());
         intent.putExtra("image", card.getImage());
         intent.putExtra("bgImage", card.getBgImage());
-        intent.putExtra("cardKey", card.getKey()); // Pass the card key
+        intent.putExtra("cardKey", card.getKey());
 
         context.startActivity(intent);
     }
