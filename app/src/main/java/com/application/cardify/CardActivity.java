@@ -72,8 +72,16 @@ public class CardActivity extends AppCompatActivity {
 
         loadImageFromUrl(card.getImage(), logoField);
         loadImageFromUrl(card.getBgImage(), bgField);
-        // Generate and display the QR code
+
+        qrCodeField.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openQRCodeFullscreenActivity();
+            }
+        });
+
         generateAndDisplayQRCode(qrCodeField);
+
     }
 
     private void generateAndDisplayQRCode(ImageView qrCodeField) {
@@ -110,5 +118,24 @@ public class CardActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void openQRCodeFullscreenActivity() {
+        String fullName = card.getNameSurname();
+        String companyName = card.getCompanyName();
+        String email = card.getEmail();
+        String address = card.getAddress();
+        String phone = card.getPhoneNumber();
+        String website = card.getWebsite();
+        String bgImage = card.getBgImage();
+        String logo = card.getImage();
+
+        // Combine the individual data strings
+        String qrCodeData = fullName + "\n" + companyName + "\n" + email + "\n" + address
+                + "\n" + phone + "\n" + website + "\n" + bgImage + "\n" + logo;
+
+        Intent intent = new Intent(this, QRCodeFullscreen.class);
+        intent.putExtra("qrCodeData", qrCodeData);
+        startActivity(intent);
     }
 }
