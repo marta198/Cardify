@@ -8,6 +8,7 @@ import java.util.Set;
 
 public class Card {
 
+    private String key;
     private String user; // New variable for user's email
     private String nameSurname;
     private String companyName;
@@ -19,6 +20,8 @@ public class Card {
     private String image; // Variable for the image
     private String importance; // Variable for importance
     private boolean isOwner; // Variable to indicate if the user is the owner
+
+    public Card() {};
 
     public Card(String user, String nameSurname, String companyName, String phoneNumber, String email, String website, String address, String bgImage, String image, String importance, boolean isOwner) {
         this.user = user;
@@ -33,6 +36,8 @@ public class Card {
         this.importance = importance;
         this.isOwner = isOwner;
     }
+
+    public String getKey() { return key; }
 
     public String getUser() {
         return user;
@@ -76,13 +81,11 @@ public class Card {
 
     public boolean getIsOwner() { return isOwner; }
 
-    public void setUser(String user) {
-        this.user = user;
-    }
+    public void setKey(String key) { this.key = key; }
 
-    public void setNameSurname(String nameSurname) {
-        this.nameSurname = nameSurname;
-    }
+    public void setUser(String user) { this.user = user; }
+
+    public void setNameSurname(String nameSurname) { this.nameSurname = nameSurname; }
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
@@ -116,10 +119,9 @@ public class Card {
         this.importance = importance;
     }
 
-    public void setOwner(boolean owner) {
-        isOwner = owner;
+    public void setIsOwner(boolean isOwner) {
+        this.isOwner = isOwner;
     }
-
 
     public static void addMyCard(Card item, Activity activity) {
         SharedPreferences mPrefs = activity.getSharedPreferences("cardifyPrefs", Activity.MODE_PRIVATE);
