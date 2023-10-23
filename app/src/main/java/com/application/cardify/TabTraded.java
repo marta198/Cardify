@@ -109,8 +109,6 @@ public class TabTraded extends Fragment {
                     String cardKey = ds.getKey();
                     card.setKey(cardKey);
                     if (card.getUser().equals(currentUser.getEmail()) && !card.getIsOwner()) {
-                        int randomIndex = rand.nextInt(choices.size());
-                        card.setImportance(choices.get(randomIndex));
                         dynamicCards.add(card);
                     }
                 }

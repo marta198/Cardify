@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:clickable="true"
-            android:text="Interesting"
+            android:text="Important"
             app:chipBackgroundColor="@color/bg_chip_state_list" />
 
         <com.google.android.material.chip.Chip
@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:text="NotInteresting"
+            android:text="Not Important"
             app:chipBackgroundColor="@color/bg_chip_state_list" />
     </LinearLayout>
 

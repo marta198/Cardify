@@ -98,7 +98,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     private Filter cardFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            Log.d("testData", "performFiltering: "+ constraint);
             if (constraint == null || constraint.length() == 0) {
                 filteredList.clear();
                 filteredList.addAll(cardList);
