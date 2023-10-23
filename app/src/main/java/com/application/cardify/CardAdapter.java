@@ -1,6 +1,8 @@
 package com.application.cardify;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -20,14 +27,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> implements Filterable {
-    private List<Card> cardList;
-    private List<Card> cardListFull;
-    private Context context;
-    private boolean showEditButton;
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://cardify-402213-default-rtdb.europe-west1.firebasedatabase.app/").getReference();
+    DatabaseReference cardsRef = databaseReference.child("cards");
+    List<Card> cardList;
+    private List<Card> filteredList = new ArrayList<>();
+    Context context;
+    boolean showEditButton;
     public CardAdapter(Context context, List<Card> cardList, boolean showEditButton) {
         this.context = context;
         this.cardList = cardList;
-        this.cardListFull = new ArrayList<>(this.cardList);
+        this.filteredList = new ArrayList<>(cardList);
         this.showEditButton = showEditButton;
     }
     @NonNull
@@ -41,6 +52,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
         final Card card = cardList.get(position);
         holder.companyName.setText(card.getCompanyName());
+
 
         // Check if the current card can show the edit button
         if (showEditButton) {
@@ -84,15 +96,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     private Filter cardFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<Card> filteredList = new ArrayList<>();
-
             if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(cardListFull);
+                filteredList.addAll(cardList);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
-
-                for (Card item : cardListFull) {
-                    if (item.getImportance().toLowerCase().contains(filterPattern)) {
+                filteredList.clear();
+                for (Card item : cardList) {
+                    if (item.getImportance().toString().toLowerCase().trim().equals(filterPattern)) {
                         filteredList.add(item);
                     }
                 }
@@ -100,14 +110,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
             FilterResults results = new FilterResults();
             results.values = filteredList;
             return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            cardList.clear();
-            cardList.addAll((List<Card>) results.values);
-            notifyDataSetChanged();
-        }
+        };
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                filteredList.clear();
+                filteredList.addAll((List<Card>) results.values);
+                notifyDataSetChanged();
+            }
     };
 
     public class CardViewHolder extends RecyclerView.ViewHolder {
@@ -134,28 +143,51 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         context.startActivity(intent);
     }
 
+
     private void openEditCardActivity(Card card) {
-        GsonBuilder builder = new GsonBuilder();
-        Gson gson = builder.create();
-        String jsonCard = gson.toJson(card);
         Intent intent = new Intent(context, EditCard.class);
 
         // Pass the card data as extras
-        intent.putExtra("jsonCard", jsonCard);
-        intent.putExtra("cardName", card.getNameSurname());
+        intent.putExtra("nameSurname", card.getNameSurname());
         intent.putExtra("companyName", card.getCompanyName());
         intent.putExtra("phoneNumber", card.getPhoneNumber());
         intent.putExtra("email", card.getEmail());
         intent.putExtra("website", card.getWebsite());
         intent.putExtra("address", card.getAddress());
+        intent.putExtra("image", card.getImage());
+        intent.putExtra("bgImage", card.getBgImage());
+        intent.putExtra("cardKey", card.getKey()); // Pass the card key
 
         context.startActivity(intent);
     }
 
     private void deleteCardFromFirebase(Card card) {
-        // Implement the logic to delete the card from Firebase
-        Toast.makeText(context, "Card deleted", Toast.LENGTH_SHORT).show();
-        //add a confirmation popup where the user can click yes or no
-
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Delete Card");
+        builder.setMessage("Are you sure you want to delete this card?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                cardsRef.child(card.getKey()).removeValue(new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                        if (databaseError == null) {
+                            Toast.makeText(context, "Card deleted", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, "Failed to delete the card", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
     }
+
+
 }
