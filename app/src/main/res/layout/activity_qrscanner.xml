@@ -15,11 +15,12 @@
         android:layout_centerInParent="true"
         android:text="Scan QR Code" />
 
-    <TextView
-        android:id="@+id/qrCodeText"
+    <Button
+        android:id="@+id/backButton"
+        style="@style/SharpButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="QR Code Text"
+        android:text="Go back"
         android:layout_below="@id/scanButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp" />
