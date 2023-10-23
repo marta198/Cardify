@@ -44,8 +44,9 @@ public class TabTraded extends Fragment {
     public TabTraded(String title) {
         this.title = title;
     }
-
-
+    public TabTraded() {
+        this.title = "Traded";
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

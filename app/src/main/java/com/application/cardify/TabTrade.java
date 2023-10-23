@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.zxing.integration.android.IntentIntegrator;
 
 public class TabTrade extends Fragment {
 
@@ -30,6 +32,10 @@ public class TabTrade extends Fragment {
 
     public TabTrade(String title) {
         this.title = title;
+    }
+
+    public TabTrade() {
+        this.title = "Trade";
     }
 
     @Override
@@ -46,16 +52,24 @@ public class TabTrade extends Fragment {
 
         Button goToQRScannerButton = view.findViewById(R.id.goto_qrscanner);
 
-
         goToQRScannerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), QRScanner.class);
-                intent.putExtra("openScanner",true);
-                startActivityForResult(intent,1);
+                IntentIntegrator.forSupportFragment(TabTrade.this)
+                        //create a vertically locked scanner
+                        .setOrientationLocked(true)
+                        //set the prompt text for the scanner
+                        .setPrompt("Scan a QR code")
+                        //set the beep to true to play a beep when a code is scanned
+                        .setBeepEnabled(true)
+                        //set the camera id to back camera
+                        .setCameraId(0)
+                        //set the result display duration
+                        .setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
+                        //initiate scan
+                        .initiateScan();
             }
         });
-
     }
 
     public void onButtonShowPopupWindowClick(View view, String contents) {
@@ -132,22 +146,19 @@ public class TabTrade extends Fragment {
 
         AlertDialog dialog = builder.create();
         dialog.show();
-
-
-
-
-
-
-
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        String contents = data.getStringExtra("returnData");
-        if (contents != null) {
-            String[] split = contents.split("\\|");
-            onButtonShowPopupWindowClick(getView(),contents);
-
+        if (data != null) {
+            String contents = data.getStringExtra("SCAN_RESULT");
+            if (contents != null) {
+                OnButtonShowPopupDialogFragment dialogFragment = OnButtonShowPopupDialogFragment.newInstance(contents);
+                dialogFragment.show(requireFragmentManager(), "OnButtonShowPopupDialogFragment");
+                Toast.makeText(requireContext(), "Scan successful", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(requireContext(), "Scan failed", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }
