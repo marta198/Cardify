@@ -105,8 +105,13 @@ public class AddNew extends AppCompatActivity {
             showAlertDialog("Please provide a company logo URL.");
         } else {
             String user = currentUser.getEmail();
-            cardsRef.push().setValue(new Card(user, fullName, company, phone, email, website, address, selectedBackgroundImageUrl, companyLogoUrl, "Important", true));
-            Toast.makeText(AddNew.this, "Card created", Toast.LENGTH_SHORT);
+
+            DatabaseReference newCardRef = cardsRef.push();
+            String cardKey = newCardRef.getKey();
+            Card newCard = new Card(user, fullName, company, phone, email, website, address, selectedBackgroundImageUrl, companyLogoUrl, "Important", true);
+            newCard.setKey(cardKey);
+            newCardRef.setValue(newCard);
+            Toast.makeText(AddNew.this, "Card created", Toast.LENGTH_SHORT).show();
             finish();
         }
     }
