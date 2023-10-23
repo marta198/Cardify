@@ -45,19 +45,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CardAdapter"
-            android:exported="false" />
-        <activity
-            android:name=".QRGenerator"
-            android:exported="false" />
-        <activity
-            android:name=".QRScanner"
+            android:name=".CardActivity"
             android:exported="false" />
         <activity
             android:name=".AddNew"
-            android:exported="false" />
-        <activity
-            android:name=".CardActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
