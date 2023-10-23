@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +56,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
         final Card card = filteredList.get(position);
         holder.companyName.setText(card.getCompanyName());
+        holder.nameSurname.setText(card.getNameSurname());
+        holder.email.setText(card.getEmail());
 
+        if (card.getImage() != null && !card.getImage().isEmpty()) {
+            Picasso.get().load(card.getImage()).into(holder.companyLogo);
+        }
 
         // Check if the current card can show the edit button
         if (showEditButton) {
@@ -127,6 +134,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
 
     public class CardViewHolder extends RecyclerView.ViewHolder {
         TextView companyName;
+        TextView nameSurname;
+        TextView email;
+        ImageView companyLogo;
         View textContainer;
         View editCard;
         View deleteCard;
@@ -134,6 +144,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         public CardViewHolder(View itemView) {
             super(itemView);
             companyName = itemView.findViewById(R.id.companyName);
+            nameSurname = itemView.findViewById(R.id.nameSurname);
+            email = itemView.findViewById(R.id.email);
+            companyLogo = itemView.findViewById(R.id.companyLogo);
             textContainer = itemView.findViewById(R.id.textContainer_card_item);
             editCard = itemView.findViewById(R.id.edit_card);
             deleteCard = itemView.findViewById(R.id.delete_card);
