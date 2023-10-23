@@ -21,10 +21,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/companyName"
+            android:id="@+id/nameSurname"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Company Name"
+            android:text="Name Surname"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -32,22 +32,22 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/phone"
+            android:id="@+id/companyName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Phone Number"
+            android:text="Company Name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/companyName" />
+            app:layout_constraintTop_toBottomOf="@+id/nameSurname" />
 
         <TextView
             android:id="@+id/email"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Email Address"
+            android:text="Email address"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/phone" />
+            app:layout_constraintTop_toBottomOf="@+id/companyName" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Images Container -->
